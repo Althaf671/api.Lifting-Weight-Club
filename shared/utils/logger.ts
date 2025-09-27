@@ -11,22 +11,22 @@ export class Logger {
 
     // start
     static start = (message: string): void => {
-        const timestamp = Logger.getTimestamp();
         if (process.env.NODE_ENV === "development") {
             console.log("");
-            console.group('\x1b[44m%s\x1b[0m', ` ========== [ BEGIN OPERATION ] ${message} ========= `);
+            console.group('\x1b[44m%s\x1b[0m', ` ========== [ BEGIN OPERATION ] [ ${message} ] ========= `);
             console.log("");
         };
     };
 
     // end
-    static end = (): void => {
+    static end = (message: string): void => {
         if (process.env.NODE_ENV === "development") {
             console.groupEnd();
             console.log("");
             console.trace();
             console.log("");
-            console.log('\x1b[43m%s\x1b[0m', " ============== [ END OPERATION ] =============== ")
+            console.log('\x1b[43m%s\x1b[0m', ` ============== [ END OPERATION ] [ ${message} ] =============== `)
+            console.log("");
         };
     };
 

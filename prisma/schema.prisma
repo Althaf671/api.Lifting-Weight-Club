@@ -13,3 +13,99 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model User {
+  id            String          @id @default(cuid())  
+  name          String
+  email         String          @unique
+  password      String?
+  picture       String?  
+  isVerified    Boolean         @default(false)
+  isBlacklisted Boolean       @default(false)
+
+  createdAt     DateTime        @default(now())   
+  lastActive    DateTime?
+  status        Status          @default(ACTIVE)
+
+  account       Account?  
+  plan          Plan[]   
+
+  @@index([email])
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+model Account {
+  id            String          @id @default(cuid())
+  userId        String          @unique
+  user          User            @relation(fields: [userId], references: [id])
+  provider      String
+  providerId    String
+  resetToken    String?  
+
+  session       Session[]
+  abusive       Abusive[]
+}
+
+model Session {
+  id            String          @id @default(cuid())
+  accountId     String 
+  account       Account         @relation(fields: [accountId], references: [id])    
+  refreshToken  String?   
+
+  createdAt     DateTime        @default(now())
+  expiresAt     Int?
+}
+
+model Plan {
+  id                    String          @id @default(cuid())
+  type                  PlanType
+  price                 Int
+  isActive              Boolean         @default(true)
+  qrToken               String          @unique
+
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id])
+  stripeSubscriptionId  String?
+  stripeInvoiceId       String?
+
+  startDate             DateTime        @default(now())
+  endDate               DateTime        
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([startDate, endDate])
+}
+
+enum PlanType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+model Abusive {
+  id          String          @id @default(cuid())
+  accountId   String
+  account     Account         @relation(fields: [accountId], references: [id])
+  ipAddress   String
+
+  @@unique([accountId, ipAddress])
+}
+
+enum Pathname {
+  LOGIN
+  REGISTER
+  FORGOT_PASSWORD
+  RESET_PASSWORD
+  RENEW_QR_CODE
+  SESSION
+  GOOGLE_PASSWORDLESS_LOGIN
+  PLAN_PAYMENT
+  RENEW_PLAN
+  USER_DASHBOARD
+}

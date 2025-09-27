@@ -9,7 +9,7 @@ export class AuthClientController {
 
     //========== Register Controller ==========//
     async RegisterController(req: Request, res: Response): Promise<void> {
-        Logger.start("Register Controller");
+        Logger.start("Register");
         Logger.timeStart();
 
         Logger.warn("validating register payload");
@@ -19,38 +19,38 @@ export class AuthClientController {
             Logger.timeEnd();
             res.status(400).json({ message: "Invalid payload" });
             return;
-        }
+        };
         Logger.debug(payload);
         Logger.success("payload valid");
 
         try {
 
-            const successResponse: TStandarSuccessApiResponse = {
+            /*const successResponse: TStandarSuccessApiResponse = {
                 
-            };
+            };*/
             
             Logger.success("success to run controller");
             Logger.timeEnd();
             Logger.end();
-            res.status(201).json(successResponse);
+            res.status(201).json();
             return;
         } catch (error) {
 
-            const errorResponse: TStandarErrorApiResponse = {
+            /*const errorResponse: TStandarErrorApiResponse = {
 
-            };
+            };*/
 
             Logger.error("failed to run register controller");
             Logger.timeEnd();
             Logger.end();
-            res.status(500).json(errorResponse);
+            res.status(500).json();
             return;
         };
     };
 
     //========== Login Controller ==========//
     async LoginController(req: Request, res: Response): Promise<void> {
-        Logger.start("Login Controller");
+        Logger.start("Login");
         Logger.timeStart();
 
         Logger.warn("validating login payload");
@@ -66,21 +66,21 @@ export class AuthClientController {
 
         try {
 
-            const successResponse: TStandarSuccessApiResponse = {
-
-            };
+            /*const successResponse: TStandarSuccessApiResponse = {
+                
+            };*/
             
             Logger.success("success to run login controller");
             Logger.timeEnd();
             Logger.end();
-            res.status(200).json(successResponse);
+            res.status(200).json();
             return;
         } catch (error) {
 
-            const errorResponse: TStandarErrorApiResponse = {
+            /*const errorResponse: TStandarErrorApiResponse = {
 
-            };
-            
+            };*/
+
             Logger.error("failed to run login controller");
             Logger.timeEnd();
             Logger.end();
