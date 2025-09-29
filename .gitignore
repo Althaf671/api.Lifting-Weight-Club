@@ -1,5 +1,45 @@
+# ===================== #
+# Node & Dependencies   #
+# ===================== #
 node_modules
-# Keep environment variables out of version control
-.env
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
+# ===================== #
+# Build Output          #
+# ===================== #
+dist/
+build/
+*.tsbuildinfo
+
+# ===================== #
+# Logs                  #
+# ===================== #
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# ===================== #
+# Environment Variables #
+# ===================== #
+.env*
+!.env*.sample
+
+# ===================== #
+# OS / Misc             #
+# ===================== #
+.DS_Store
+Thumbs.db
+
+# ===================== #
+# Editor Config         #
+# ===================== #
+.vscode/
+.idea/
 /generated/prisma
