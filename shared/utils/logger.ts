@@ -14,6 +14,7 @@ export class Logger {
         if (process.env.NODE_ENV === "development") {
             console.log("");
             console.group('\x1b[44m%s\x1b[0m', ` ========== [ BEGIN OPERATION ] [ ${message} ] ========= `);
+            console.time();
             console.log("");
         };
     };
@@ -24,30 +25,17 @@ export class Logger {
             console.groupEnd();
             console.log("");
             console.trace();
+            console.timeEnd();
             console.log("");
             console.log('\x1b[43m%s\x1b[0m', ` ============== [ END OPERATION ] [ ${message} ] =============== `)
             console.log("");
         };
     };
 
-    // time  start
-    static timeStart = (): void => {
-        if (process.env.NODE_ENV === "development") {
-            console.time();
-        };
-    };
-
-    // time end
-    static timeEnd = (): void => {
-        if (process.env.NODE_ENV === "development") {
-            console.timeEnd();
-        };
-    };
-
     // debug
     static debug = (message: object): void => {
         if (process.env.NODE_ENV === "development") {
-            console.debug();
+            console.debug('[ DEBUG ]', "     ",       message);
         };       
     }
 

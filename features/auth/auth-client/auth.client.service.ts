@@ -1,7 +1,7 @@
 // auth.client.service.ts
 
 import { Logger } from "../../../shared/utils/logger";
-import { TLoginDto, TRegisterDto } from "./auth.client.dto";
+import { TLoginDto, TRegisterDto } from "../shared-auth/auth.dto";
 
 export class AuthClientService {
 

@@ -2,21 +2,23 @@
 
 import { Request, Response } from 'express';
 import { Logger } from '../../../shared/utils/logger';
-import { LoginDto, RegisterDto } from './auth.client.dto';
+import { LoginDto, RegisterDto } from '../shared-auth/auth.dto';
 import { TStandarErrorApiResponse, TStandarSuccessApiResponse } from '../../../shared/types';
+
 
 export class AuthClientController {
 
     //========== Register Controller ==========//
     async RegisterController(req: Request, res: Response): Promise<void> {
-        Logger.start("Register");
-        Logger.timeStart();
+        const operation = "Register";
+        Logger.start(operation);
 
         Logger.warn("validating register payload");
         const payload = RegisterDto.safeParse(req.body);
         if (!payload.success) {
             Logger.error("invalid payload");
-            Logger.timeEnd();
+            Logger.debug(payload.error);
+            Logger.end(operation);
             res.status(400).json({ message: "Invalid payload" });
             return;
         };
@@ -30,8 +32,7 @@ export class AuthClientController {
             };*/
             
             Logger.success("success to run controller");
-            Logger.timeEnd();
-            Logger.end();
+            Logger.end(operation);
             res.status(201).json();
             return;
         } catch (error) {
@@ -41,8 +42,7 @@ export class AuthClientController {
             };*/
 
             Logger.error("failed to run register controller");
-            Logger.timeEnd();
-            Logger.end();
+            Logger.end(operation);
             res.status(500).json();
             return;
         };
@@ -50,14 +50,15 @@ export class AuthClientController {
 
     //========== Login Controller ==========//
     async LoginController(req: Request, res: Response): Promise<void> {
-        Logger.start("Login");
-        Logger.timeStart();
+        const operation = "Login";
+        Logger.start(operation);
 
         Logger.warn("validating login payload");
         const payload = LoginDto.safeParse(req.body);
         if (!payload.success) {
             Logger.error("invalid payload");
-            Logger.timeEnd();
+            Logger.debug(payload.error);
+            Logger.end(operation);
             res.status(400).json({ message: "Invalid payload" });
             return;
         };
@@ -71,8 +72,7 @@ export class AuthClientController {
             };*/
             
             Logger.success("success to run login controller");
-            Logger.timeEnd();
-            Logger.end();
+            Logger.end(operation);
             res.status(200).json();
             return;
         } catch (error) {
@@ -82,8 +82,7 @@ export class AuthClientController {
             };*/
 
             Logger.error("failed to run login controller");
-            Logger.timeEnd();
-            Logger.end();
+            Logger.end(operation);
             res.status(500).json();
             return;
         };
