@@ -2,14 +2,16 @@
 
 import { Request, Response } from 'express';
 import { Logger } from '../../../shared/utils/logger';
-import { LoginDto, RegisterDto } from '../shared-auth/auth.dto';
+import { LoginDto, RegisterDto, TLoginDto } from '../shared-auth/auth.dto';
 import { TStandarErrorApiResponse, TStandarSuccessApiResponse } from '../../../shared/types';
+import { AuthClientService } from './auth.client.service';
 
 
 export class AuthClientController {
+    constructor (private readonly service: AuthClientService) {};
 
     //========== Register Controller ==========//
-    async RegisterController(req: Request, res: Response): Promise<void> {
+    async RegisterController(req: Request, res: Response) {
         const operation = "Register";
         Logger.start(operation);
 
@@ -53,6 +55,7 @@ export class AuthClientController {
         const operation = "Login";
         Logger.start(operation);
 
+        // validate incoming payload
         Logger.warn("validating login payload");
         const payload = LoginDto.safeParse(req.body);
         if (!payload.success) {
@@ -65,7 +68,12 @@ export class AuthClientController {
         Logger.debug(payload);
         Logger.success("payload valid");
 
+        // destruct payload
+        const loginData = payload.data;
+
         try {
+
+            const result = await this.service.LoginService(loginData);
 
             /*const successResponse: TStandarSuccessApiResponse = {
                 

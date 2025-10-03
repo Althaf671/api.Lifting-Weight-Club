@@ -33,7 +33,7 @@ export class Logger {
     };
 
     // debug
-    static debug = (message: object): void => {
+    static debug = (message: object | string | boolean): void => {
         if (process.env.NODE_ENV === "development") {
             console.debug('[ DEBUG ]', "     ",       message);
         };       

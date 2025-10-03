@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -19,7 +18,7 @@ model User {
   id            String          @id @default(cuid())  
   name          String
   email         String          @unique
-  password      String?
+  password      String
   picture       String?  
   isVerified    Boolean         @default(false)
   isBlacklisted Boolean       @default(false)
@@ -28,7 +27,7 @@ model User {
   lastActive    DateTime?
   status        Status          @default(ACTIVE)
 
-  account       Account?  
+  account       Account? 
   plan          Plan[]   
 
   @@index([email])
