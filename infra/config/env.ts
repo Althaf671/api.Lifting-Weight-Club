@@ -16,7 +16,7 @@ const envSchema = z.object({
     //PORT: z.string().transform(Number),
     ACCESS_KEY: z.string().min(64),
     REFRESH_KEY: z.string().min(64),
-    SUPER_KEY: z.string().min(64),
+    // SUPER_KEY: z.string().min(64),
     DATABASE_URL: z.string(),
 });
 

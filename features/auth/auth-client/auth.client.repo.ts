@@ -31,6 +31,7 @@ export class AuthClientRepo {
             },
         })
         if (!userLoginData) {
+            Logger.warn("no stuff")
             Logger.info("query ended");
             throw new Error;
         };

@@ -10,12 +10,12 @@ export type TUserLoginData = {
     id: string;
     name: string;
     email: string;
-    status: string;
+    status: boolean;
     isVerified: boolean;
     isBlacklisted: boolean;
     picture: string | null;
     account: {
         provider: string;
         providerId: string;
-    } | null
+    } | null;
 };

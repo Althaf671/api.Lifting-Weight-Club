@@ -21,21 +21,16 @@ model User {
   password      String
   picture       String?  
   isVerified    Boolean         @default(false)
-  isBlacklisted Boolean       @default(false)
+  isBlacklisted Boolean         @default(false)
 
   createdAt     DateTime        @default(now())   
   lastActive    DateTime?
-  status        Status          @default(ACTIVE)
+  status        Boolean         @default(true)
 
   account       Account? 
   plan          Plan[]   
 
   @@index([email])
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
 }
 
 model Account {
@@ -54,7 +49,10 @@ model Session {
   id            String          @id @default(cuid())
   accountId     String 
   account       Account         @relation(fields: [accountId], references: [id])    
-  refreshToken  String?   
+  refreshToken  String?         @unique
+  isRevoked     Boolean         @default(false)
+  deviceInfo    String?
+  ipAddress     String?
 
   createdAt     DateTime        @default(now())
   expiresAt     Int?

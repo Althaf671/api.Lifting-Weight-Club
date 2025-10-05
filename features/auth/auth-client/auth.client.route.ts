@@ -1,11 +1,15 @@
 // route.client.route.ts
 
 import { Router } from "express";
+import { AccessMiddleware } from "../../../shared/middlewares/access.middleware";
+import { controller } from "./container";
 
 const router = Router();
-const api = "/client";
+const api = "/client-auth";
 
 router.post(
-    '/login'
-    
-)
+    api + '/login',
+    controller.LoginController.bind(controller),
+);
+
+export default router;

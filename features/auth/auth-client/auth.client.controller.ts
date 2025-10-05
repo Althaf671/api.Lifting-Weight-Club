@@ -5,6 +5,7 @@ import { Logger } from '../../../shared/utils/logger';
 import { LoginDto, RegisterDto, TLoginDto } from '../shared-auth/auth.dto';
 import { TStandarErrorApiResponse, TStandarSuccessApiResponse } from '../../../shared/types';
 import { AuthClientService } from './auth.client.service';
+import { setRefreshTokenCookie, setTokenCookie } from '../../../infra/config/cookie';
 
 
 export class AuthClientController {
@@ -78,10 +79,22 @@ export class AuthClientController {
             /*const successResponse: TStandarSuccessApiResponse = {
                 
             };*/
+
+            // 4. Set access token cookies
+            Logger.warn("Set cookie accessToken");
+            setTokenCookie(res, result.accessToken);
+            Logger.success("Cookie has been set");
+
+            // 5. Set refresh token cookies
+            Logger.warn("Set cookie refresh token");
+            setRefreshTokenCookie(res,  result.refreshToken);
+            Logger.success("Cookie has been set");
             
             Logger.success("success to run login controller");
             Logger.end(operation);
-            res.status(200).json();
+            res.status(200).json({
+                message: "logged in"
+            });
             return;
         } catch (error) {
 
